@@ -46,17 +46,11 @@ h1, h2, h3{
 table{
     text-align: center;
 }
-#Q1{
-    display: none;
-}
-#Q2{
-    display: none;
-}
-#Q3{
-    display: none;
-}
 #questions img{
     margin-top: 50px;
     width: 50%;
+    height: 50%;
     text-align: center;
 }
+
+

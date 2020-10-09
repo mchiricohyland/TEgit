@@ -1,21 +1,30 @@
 function main(){
-    ShowQuestion("Q1");
+    
 }
 
-function Answer(currentQuestion, nextQuestion){
-    HideQuestion(currentQuestion);
-    ShowQuestion(nextQuestion);
+function NavigateRight(){
+    var img = document.getElementById("q");
 
-    if(nextQuestion === "FINAL")
+    if(img.getAttribute("src") === "Q1.png")
     {
-        DisplayAnswer();
+        img.setAttribute("src", "Q2.png");
+    }
+    else if(img.getAttribute("src") === "Q2.png")
+    {
+        img.setAttribute("src", "Q3.png");
     }
 }
 
-function HideQuestion(question){
-    document.getElementById(question).style.display = "none";
+function NavigateLeft(){
+    var img = document.getElementById("q");
+
+    if(img.getAttribute("src") === "Q2.png")
+    {
+        img.setAttribute("src", "Q1.png");
+    }
+    else if(img.getAttribute("src") === "Q3.png")
+    {
+        img.setAttribute("src", "Q2.png");
+    }
 }
 
-function ShowQuestion(question){
-    document.getElementById(question).style.display = "block";
-}
