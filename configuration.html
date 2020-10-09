@@ -1,0 +1,74 @@
+<h1 id="it-s-so-easy-tyler-can-do-it-">It&#39;s so easy, Tyler can do it!</h1>
+<h2 id="a-training-in-parts-answers">A Training in Parts ANSWERS</h2>
+<h3 id="configuration-questions-1-3-complete">Configuration Questions 1-3 COMPLETE</h3>
+<pre><code class="lang-c#"><span class="hljs-keyword">long</span> userID = <span class="hljs-keyword">this</span>.Arrangement.Configuration.Core.<span class="hljs-keyword">New</span>(<span class="hljs-keyword">new</span> UserConfiguration()
+{
+    AssignedUserGroupIDs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[] { Ids.UserGroup.MANAGER }
+});
+
+<span class="hljs-keyword">long</span> documentTypeID = <span class="hljs-keyword">this</span>.Arrangement.Configuration.Core.<span class="hljs-keyword">New</span>(<span class="hljs-keyword">new</span> DocumentTypeConfiguration()
+{
+    AssignedUserGroupIDs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[] { Ids.UserGroup.MANAGER }
+}, Ids.DiskGroup.Data);
+
+<span class="hljs-keyword">long</span> lifeCycleID = <span class="hljs-keyword">this</span>.Arrangement.Configuration.Workflow.<span class="hljs-keyword">New</span>(<span class="hljs-keyword">new</span> LifeCycleConfiguration()
+{
+    AssignedUserGroupIDs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[] { Ids.UserGroup.MANAGER, userGroupID },
+    AssignedWorkItemTypeIDs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[] { documentTypeID },
+    WorkItemType = WorkItemType.Document
+});
+
+<span class="hljs-keyword">long</span> queueID = <span class="hljs-keyword">this</span>.Arrangement.Configuration.Workflow.<span class="hljs-keyword">New</span>(lifeCycleID, <span class="hljs-keyword">new</span> QueueConfiguration()
+{
+    AssignedUserGroupIDs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[] { Ids.UserGroup.MANAGER }
+});
+
+<span class="hljs-keyword">long</span> adHocTaskID = <span class="hljs-keyword">this</span>.Arrangement.Configuration.Workflow.<span class="hljs-keyword">New</span>(queueID1, <span class="hljs-keyword">new</span> AdHocTaskConfiguration()
+{
+    AssignedUserGroupIDs = <span class="hljs-keyword">new</span> <span class="hljs-keyword">long</span>[] { Ids.UserGroup.MANAGER }
+});
+
+RuleConfiguration ruleConfig = <span class="hljs-keyword">new</span> RuleConfiguration()
+{
+    TaskConfiguration = <span class="hljs-keyword">new</span> Hyland.Workflow.Tasks.Rules.PromptUserWithQuestionBox.TaskConfiguration()
+    {
+        QuestionText = <span class="hljs-string">"Quick, Yes or No: This training is super hard?"</span>,
+        HideCancelButton = <span class="hljs-keyword">false</span>,
+        CancelButtonCaption = <span class="hljs-string">"Cancel"</span>,
+        YesButtonCaption = <span class="hljs-string">"Yes, omg, totally"</span>,
+        NoButtonCaption = <span class="hljs-string">"Pshht, No"</span>,
+    }
+}
+
+<span class="hljs-comment">//Adding Rule to Ad Hoc Task</span>
+<span class="hljs-keyword">this</span>.Arrangement.Configuration.Workflow.<span class="hljs-keyword">New</span>(<span class="hljs-keyword">this</span>.Session, <span class="hljs-keyword">this</span>.ServiceProvider, adHocTaskID, ruleconfig);
+
+<span class="hljs-comment">//Adding Actions to Rule branches</span>
+<span class="hljs-keyword">this</span>.Arrangement.Configuration.Workflow.<span class="hljs-keyword">New</span>(<span class="hljs-keyword">this</span>.Session, <span class="hljs-keyword">this</span>.ServiceProvider, ruleconfig.OnTrueTaskListID, <span class="hljs-keyword">new</span> ActionConfiguration()
+{
+    TaskConfiguration = <span class="hljs-keyword">new</span> Hyland.Workflow.Tasks.Actions.DisplayMessageBox.TaskConfiguration()
+    {
+        Message = <span class="hljs-string">"You'll be fine."</span>
+    }
+}
+
+<span class="hljs-keyword">this</span>.Arrangement.Configuration.Workflow.<span class="hljs-keyword">New</span>(<span class="hljs-keyword">this</span>.Session, <span class="hljs-keyword">this</span>.ServiceProvider, ruleconfig.OnFalseTaskListID, <span class="hljs-keyword">new</span> ActionConfiguration()
+{
+    TaskConfiguration = <span class="hljs-keyword">new</span> Hyland.Workflow.Tasks.Actions.DisplayMessageBox.TaskConfiguration()
+    {
+        Message = <span class="hljs-string">"Good, I'll make it harder."</span>
+    }
+}
+
+DropCache();
+
+User user = User.FromID(<span class="hljs-keyword">this</span>.DataSourceName, userID);
+
+IQueueProvider queueProvider = <span class="hljs-keyword">this</span>.GetRequiredService&lt;IQueueProvider&gt;();
+IQueue queue1 = queueProvider.GetQueue(<span class="hljs-keyword">this</span>.DataSourceName, queueID);
+
+ITaskListProvider taskListProv = <span class="hljs-keyword">this</span>.GetRequiredService&lt;ITaskListProvider&gt;();
+ITaskList adHocTask = taskListProv.GetTaskList(<span class="hljs-keyword">this</span>.DataSourceName, adHocTaskID);
+
+Document workItemPrimary = <span class="hljs-keyword">this</span>.Arrangement.Core.Document.<span class="hljs-keyword">New</span>(documentTypeID).In(queueID).Result as Document;
+</code></pre>
