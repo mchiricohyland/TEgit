@@ -5,7 +5,7 @@ function main(){
 function NavigateRight(){
     var img = document.getElementById("q");
 
-    if(img.getAttribute("src") === "Q1.png")
+    if(img.getAttribute("src") === "Q1.PNG")
     {
         img.setAttribute("src", "Q2.png");
     }
@@ -20,7 +20,7 @@ function NavigateLeft(){
 
     if(img.getAttribute("src") === "Q2.png")
     {
-        img.setAttribute("src", "Q1.png");
+        img.setAttribute("src", "Q1.PNG");
     }
     else if(img.getAttribute("src") === "Q3.png")
     {
