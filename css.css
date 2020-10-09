@@ -45,6 +45,11 @@ h1, h2, h3{
 }
 table{
     text-align: center;
+    width: 50%;
+    margin-left: 25%;
+}
+td{
+    padding: 10px;
 }
 #questions img{
     margin-top: 50px;
