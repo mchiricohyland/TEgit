@@ -48,9 +48,21 @@ table{
 }
 #questions img{
     margin-top: 50px;
-    width: 50%;
-    height: 50%;
+    height: 300px;
+    width: 500px;
     text-align: center;
+}
+button{
+  border-radius: 15px;
+  background: black;
+  color: white;
+  padding: 15px;
+  width: 150px;
+  height: 50px;
+  text-shadow: grey 2px;
+}
+button:hover{
+    background: #476b6b;
 }
 
 
