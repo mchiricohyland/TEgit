@@ -1,5 +1,45 @@
 body{
-    background-color: burlywood;
+    background-color: antiquewhite;
     color: rgb(51, 50, 50);
     font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-image: url("swirls.jpg");
+    background-repeat: repeat-x;
+    top: 0;
+    width: 100%;
+    position: fixed;
+  }
+  li {
+    display: inline;
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-right: 1px solid #bbb;
+    background-color: #669999;
+  }
+#code{
+    background-color: #004d4d;
+    color: #ffffe6;
+    max-width: fit-content;
+    text-align: left;
+    margin-left: 15%;
+    padding: 10px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: black;
+    border-width: 5px;
+}
+h1, h2, h3{
+    text-transform: uppercase;
+    margin-top: 50px;
 }
