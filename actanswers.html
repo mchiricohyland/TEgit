@@ -1,0 +1,31 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css.css">
+</head>
+<body>
+    <div id="nav">
+        <ul>
+            <li><a id="navlinks" href="index.html">HOME</a></li>
+            <li><a id="navlinks" href="configquestions.html">Q1-3</a></li>
+            <li><a id="navlinks" href="configuration.html">A1-3</a></li>
+            <li><a id="navlinks" href="actquestions.html">Q4-6</a></li>
+            <li><a id="navlinks" href="actanswers.html">A4-6</a></li>
+        </ul>
+        </div>
+
+        <h3 id="act-questions-4-6-complete">Act Questions 4-6 COMPLETE</h3>
+        <div id="code">
+<pre><code class="lang-c"><span class="hljs-comment">//Question 4:</span>
+.ExecuteAdHocTask(<span class="hljs-built_in">this</span>.Session, <span class="hljs-keyword">new</span><span class="hljs-type"></span>[] { workItem }, queue, adHocTask, <span class="hljs-keyword">new</span> <span class="hljs-type">TaskExecutionSettings</span>());
+
+<span class="hljs-comment">//Question 5:</span>
+ ITaskExecutionService taskExecutionService = GetRequiredService&lt;ITaskExecutionService&gt;();
+ taskExecutionService.ExecuteAdHocTask(<span class="hljs-built_in">this</span>.Session, <span class="hljs-keyword">new</span><span class="hljs-type"></span>[] { workItem }, queue, adHocTask, <span class="hljs-keyword">new</span> <span class="hljs-type">TaskExecutionSettings</span>());
+
+<span class="hljs-comment">//Question 6:</span>
+ITaskExecutionService taskExecutionService = GetRequiredService&lt;ITaskExecutionService&gt;();
+TaskExecutionResult result = taskExecutionService.ExecuteAdHocTask(<span class="hljs-built_in">this</span>.Session, <span class="hljs-keyword">new</span><span class="hljs-type"></span>[] { workItem }, queue, adHocTask, <span class="hljs-keyword">new</span> <span class="hljs-type">TaskExecutionSettings</span>());
+</code></pre>
+        </div>
+    </body>
+</html>

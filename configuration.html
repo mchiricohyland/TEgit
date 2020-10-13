@@ -80,12 +80,12 @@ DropCache();
 User user = User.FromID(<span class="hljs-keyword">this</span>.DataSourceName, userID);
 
 IQueueProvider queueProvider = <span class="hljs-keyword">this</span>.GetRequiredService&lt;IQueueProvider&gt;();
-IQueue queue1 = queueProvider.GetQueue(<span class="hljs-keyword">this</span>.DataSourceName, queueID);
+IQueue queue = queueProvider.GetQueue(<span class="hljs-keyword">this</span>.DataSourceName, queueID);
 
 ITaskListProvider taskListProv = <span class="hljs-keyword">this</span>.GetRequiredService&lt;ITaskListProvider&gt;();
 ITaskList adHocTask = taskListProv.GetTaskList(<span class="hljs-keyword">this</span>.DataSourceName, adHocTaskID);
 
-Document workItemPrimary = <span class="hljs-keyword">this</span>.Arrangement.Core.Document.<span class="hljs-keyword">New</span>(documentTypeID).In(queueID).Result as Document;
+Document workItem = <span class="hljs-keyword">this</span>.Arrangement.Core.Document.<span class="hljs-keyword">New</span>(documentTypeID).In(queueID).Result as Document;
 </code></pre>
 </div>
 </body>

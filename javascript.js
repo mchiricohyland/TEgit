@@ -15,7 +15,7 @@ function NavigateRight(){
         img.setAttribute("src", "Q3.png");
         document.getElementById("next").style.backgroundColor = "grey";
     }
-    else if(img.getAttribute("src") === "Q4.PNG")
+    else if(img.getAttribute("src") === "Q4.png")
     {
         img.setAttribute("src", "Q5.png");
         document.getElementById("previous").style.backgroundColor = "black";
@@ -42,7 +42,7 @@ function NavigateLeft(){
     }
     else if(img.getAttribute("src") === "Q5.png")
     {
-        img.setAttribute("src", "Q4.PNG");
+        img.setAttribute("src", "Q4.png");
         document.getElementById("previous").style.backgroundColor = "grey";
     }
     else if(img.getAttribute("src") === "Q6.png")
