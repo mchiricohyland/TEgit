@@ -25,6 +25,16 @@ function NavigateRight(){
         img.setAttribute("src", "Q6.png");
         document.getElementById("next").style.backgroundColor = "grey";
     }
+    else if(img.getAttribute("src") === "Q7.png")
+    {
+        img.setAttribute("src", "Q8.png");
+        document.getElementById("previous").style.backgroundColor = "black";
+    }
+    else if(img.getAttribute("src") === "Q8.png")
+    {
+        img.setAttribute("src", "Q9.png");
+        document.getElementById("next").style.backgroundColor = "grey";
+    }
 }
 
 function NavigateLeft(){
@@ -48,6 +58,16 @@ function NavigateLeft(){
     else if(img.getAttribute("src") === "Q6.png")
     {
         img.setAttribute("src", "Q5.png");
+        document.getElementById("next").style.backgroundColor = "black";
+    }
+    else if(img.getAttribute("src") === "Q8.png")
+    {
+        img.setAttribute("src", "Q7.png");
+        document.getElementById("previous").style.backgroundColor = "grey";
+    }
+    else if(img.getAttribute("src") === "Q9.png")
+    {
+        img.setAttribute("src", "Q8.png");
         document.getElementById("next").style.backgroundColor = "black";
     }
 }

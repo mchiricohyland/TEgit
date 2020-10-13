@@ -1,15 +1,14 @@
-### Act Questions 4-6 COMPLETE
+### Assert Questions 7-9 COMPLETE
 
 ```c#
-//Question 4:
-.ExecuteAdHocTask(this.Session, new[] { workItem }, queue, adHocTask, new TaskExecutionSettings());
+//Question 7:
+//This is for practice purposes only, this won't work in real code.
+Assert.That(result, Is.EqualTo(TaskExecutionResult.True));
 
-//Question 5:
- ITaskExecutionService taskExecutionService = GetRequiredService<ITaskExecutionService>();
- taskExecutionService.ExecuteAdHocTask(this.Session, new[] { workItem }, queue, adHocTask, new TaskExecutionSettings());
+//Question 8:
+Assert.That(result, Is.EquivalentTo(answers));
 
-//Question 6:
-ITaskExecutionService taskExecutionService = GetRequiredService<ITaskExecutionService>();
-TaskExecutionResult result = taskExecutionService.ExecuteAdHocTask(this.Session, new[] { workItem }, queue, adHocTask, new TaskExecutionSettings());
+//Question 9:
+Assert.That(isCorrect, Is.False);
 
 ```

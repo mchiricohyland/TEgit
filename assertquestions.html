@@ -1,8 +1,9 @@
 <html>
     <head>
         <link rel="stylesheet" href="css.css">
+        <script src="javascript.js"></script>
     </head>
-    <body>
+    <body onload="main();">
         <div id="nav">
             <ul>
                 <li><a id="navlinks" href="index.html">HOME</a></li>
@@ -14,23 +15,15 @@
                 <li><a id="navlinks" href="assertanswers.html">A7-9</a></li>
             </ul>
             </div>
-            <div>
-        <h1>Temp page for TW's TE training</h1>
-        <table>
-            <tr>
-                <td><a href="configquestions.html">Configuration Q1-3</a></td>
-                <td><a href="configuration.html">Configuration Q1-3 Answers</a></td>
-            </tr>
-            <tr>
-                <td><a href="actquestions.html">Act Q4-6</a></td>
-                <td><a href="actanswers.html">Act Q4-6 Answers</a></td>
-            </tr>
-            <tr>
-                <td><a href="assertquestions.html">Assert Q7-9</a></td>
-                <td><a href="assertanswers.html">Assert Q7-9 Answers</a></td>
-            </tr>
-        </table>
-            
+
+            <div id="questions">
+                <img id="q" src="Q7.png" />
+
             </div>
+            <div id="navbuttons">
+                <button id="previous" onclick="NavigateLeft();">Last Question</button>
+                <button id="next" onclick="NavigateRight();">Next Question</button>
+            </div>
+            <a href="assertanswers.html"><button>Answers</button></a>
     </body>
 </html>
