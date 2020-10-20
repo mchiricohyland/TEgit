@@ -1,22 +1,25 @@
 <html>
 <head>
     <link rel="stylesheet" href="css.css">
+    <script src="javascript.js"></script>
 </head>
 <body>
-    <div id="nav">
-        <ul>
-            <li><a id="navlinks" href="index.html">HOME</a></li>
-            <li><a id="navlinks" href="configquestions.html">Q1-3</a></li>
-            <li><a id="navlinks" href="configuration.html">A1-3</a></li>
-            <li><a id="navlinks" href="actquestions.html">Q4-6</a></li>
-            <li><a id="navlinks" href="actanswers.html">A4-6</a></li>
-            <li><a id="navlinks" href="assertquestions.html">Q7-9</a></li>
-            <li><a id="navlinks" href="assertanswers.html">A7-9</a></li>
-        </ul>
+    <div class="dropdown">
+        <img onclick="myFunction()" class="dropbtn" src="menu.jpg"/>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="TestCaseDataINFO.html">TestCaseData Information</a>
+          <a href="configquestions.html">Config Q1-3</a>
+          <a href="actquestions.html">Act Q4-6</a>
+          <a href="assertquestions.html">Assert Q7-9</a>
+          <a href="configuration.html">Config A1-3</a>
+          <a href="actanswers.html">Act A4-6</a>
+          <a href="assertanswers.html">Assert A7-9</a>
         </div>
+      </div>
 
         <h3 id="act-questions-4-6-complete">Act Questions 4-6 COMPLETE</h3>
-        <div id="code">
+        <div id="codeDiv">
 <pre><code class="lang-c"><span class="hljs-comment">//Question 4:</span>
 .ExecuteAdHocTask(<span class="hljs-built_in">this</span>.Session, <span class="hljs-keyword">new</span><span class="hljs-type"></span>[] { workItem }, queue, adHocTask, <span class="hljs-keyword">new</span> <span class="hljs-type">TaskExecutionSettings</span>());
 

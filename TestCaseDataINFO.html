@@ -1,0 +1,314 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="css.css">
+        <script src="javascript.js"></script>
+    </head>
+<body>
+    <div class="dropdown">
+        <img onclick="myFunction()" class="dropbtn" src="menu.jpg"/>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="TestCaseDataINFO.html">TestCaseData Information</a>
+          <a href="configquestions.html">Config Q1-3</a>
+          <a href="actquestions.html">Act Q4-6</a>
+          <a href="assertquestions.html">Assert Q7-9</a>
+          <a href="configuration.html">Config A1-3</a>
+          <a href="actanswers.html">Act A4-6</a>
+          <a href="assertanswers.html">Assert A7-9</a>
+        </div>
+      </div>
+
+<h1 id="test-case-data">Test Case Data</h1>
+<h2>If it isn't so easy, Tyler can do it, then come here for information. :)</h2>
+
+<div class="main">
+    <table id="testcaseinfotable">
+        <tr>
+            <th>
+                <h2 id="simple-test-case">Simple Test Case</h2>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div id="codeDiv">
+                    <pre><code class="lang-c"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> IEnumerable Simple_TestCases
+                        {
+                            <span class="hljs-keyword">get</span>
+                            {
+                                <span class="hljs-function"><span class="hljs-keyword">yield</span> return new <span class="hljs-title">WFTestCaseData</span>(<span class="hljs-params"><span class="hljs-literal">true</span></span>)</span>;
+                                <span class="hljs-function"><span class="hljs-keyword">yield</span> return new <span class="hljs-title">WFTestCaseData</span>(<span class="hljs-params"><span class="hljs-literal">false</span></span>)</span>;
+                            }
+                        }
+                    
+                    [Test]
+                    [TestCaseSource(<span class="hljs-keyword">typeof</span>(ExecutionTest), <span class="hljs-keyword">nameof</span>(Simple_TestCases))]
+                    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Simple</span>(<span class="hljs-params"><span class="hljs-keyword">bool</span> exception</span>)
+                    </span>{}
+                    </code></pre>
+                    </div>
+                    
+
+            </td>
+            <td>
+                <p>The most basic case for using TestCaseData is when you have <strong>two or more options</strong> to pass into <strong>one variable</strong> of the test.</p>
+                
+                <h3 id="components">Components</h3>
+                <ol>
+                <li>IEunumerable property</li>
+                <li>get statement</li>
+                <li>return statement
+                    <ol>
+                <li><code id="inline">return new WFTestCaseData(option);</code> single option</li>
+                <li><code id="inline">yield return new WFTestCaseData(option1);</code> more than one option</li>
+                <li><code id="inline">yield return new WFTestCaseData(option1, option2);</code> more than one variable</li>
+                    </ol>
+                </li>
+                <li>TestCaseSource before test.
+                    <ol>
+                <li><code id="inline">[TestCaseSource(typeof(ExecutionTest), nameof(Simple_TestCases))]</code></li>
+                <li>typeof(<em>name of test class</em>)</li>
+                <li>nameof(<em>name of IEnumerable property</em>)</li>
+                    </ol>
+                </li>
+                <li>Setting up the Test Method Statement 
+                    <ol>
+                <li><code id="inline">public void Simple(bool exception)</code></li>
+                <li><em>Simple</em> is the name of the test</li>
+                <li><strong>bool</strong> <em>exception</em> is the variable data type and variable name used in the test.</li>
+                    </ol>
+                </li>
+                </ol>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <h3 id="more-complicated-example">More Complicated Example</h3>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div id="codeDiv">
+                <pre><code id="code" class="lang-c">        <span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> IEnumerable Execute_TestCases
+                        {
+                            get
+                            {
+                                <span class="hljs-comment">// Add User, User ID invalid but not 0. This does not throw an exception for some reason, </span>
+                                <span class="hljs-comment"> // but it does when the roleID is set to 999999.</span>
+                                <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> WFTestCaseData(ApproverSourceType.User, LastExecutionStatus.<span class="hljs-keyword">True</span>, <span class="hljs-number">999999</span>L);
+                                <span class="hljs-comment">// Add User, User ID valid</span>
+                                <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> WFTestCaseData(ApproverSourceType.User, LastExecutionStatus.<span class="hljs-keyword">True</span>, <span class="hljs-keyword">null</span>);
+                                <span class="hljs-comment">// Add Role, Role ID is valid</span>
+                                <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> WFTestCaseData(ApproverSourceType.Role, LastExecutionStatus.<span class="hljs-keyword">True</span>, <span class="hljs-keyword">null</span>);
+                                <span class="hljs-comment">// UI prompt for user to add</span>
+                                <span class="hljs-keyword">yield</span> <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> WFTestCaseData(ApproverSourceType.Prompt, LastExecutionStatus.<span class="hljs-keyword">False</span>, <span class="hljs-keyword">null</span>); 
+                            }
+                        }
+                
+                        [Test]
+                        [TestCaseSource(typeof(ExecutionTest), nameof(Execute_TestCases))]
+                        <span class="hljs-keyword">public</span> void Execute(ApproverSourceType approverType, LastExecutionStatus expectedExecutionStatus, <span class="hljs-keyword">long</span>? userID)
+                        {}
+                </code></pre>
+                </div>
+            </td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <h1 id="combintorials">Combintorials</h1>
+                <h2 id="example-1">Example 1</h2>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div id="codeDiv">
+                    <pre><code class="lang-c#">    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> IEnumerable Execute_Exceptions_TestCases
+                            {
+                                <span class="hljs-keyword">get</span>
+                                {
+                                    <span class="hljs-keyword">return</span> WFTestCaseData.Combinatorial(
+                                        Enum.GetValues(<span class="hljs-keyword">typeof</span>(ReplaceApprovalExpcetionEnum)).Cast&lt;<span class="hljs-keyword">object</span>&gt;());
+                                }
+                            }
+                    
+                            [Test]
+                            [TestCaseSource(<span class="hljs-keyword">typeof</span>(ExecutionTest), <span class="hljs-keyword">nameof</span>(Execute_Exceptions_TestCases))]
+                            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Execute_Exceptions</span>(<span class="hljs-params">ReplaceApprovalExpcetionEnum exception</span>)
+                            </span>{}
+                    </code></pre>
+                    </div>
+                    <details>
+                        <summary>Enumeration (OPEN)</summary>
+                        <div id="codeDiv">
+                      <code>           
+                        public enum ReplaceApprovalExpcetionEnum
+                          {
+                              QueueNotFound,
+                              QueueNotConfigured,
+                              WorkItemNotInProcess,
+                              UserNotConfigured,
+                              QueueNotApproval
+                          }</code>
+                      </div>
+                      </details>
+            </td>
+            <td>
+                <p>These are functions that allow a developer to return as many iterations of a test case based on the number and options of each variable.</p>
+                <p>In this example, there are still the components of the TestCaseSource (i.e. Property set-up, return statement) but 
+                instead of using <code id="inline">yield return</code> to have multiple returns, the Combintorial method returns an IEnumberable.</p>
+                
+                <h3 id="components-of-the-combintorial-method">Components of the Combintorial Method</h3>
+                <ol>
+                <li><code id="inline">WFTestCaseData.Combintorial()</code></li>
+                <li>The method arguments can be anything, as long as it is cast as <code id="inline">.Cast&lt;object&gt;()</code>. 
+                    <ol>
+                <li><code id="inline">Enum.GetValues()</code> returns every value in the enumeration called.<ol>
+                <li>In the example provided, the enum holds five values, therefore, the combintorial will return five tests</li>
+                </ol>
+                </li>
+                <li>Another example would be if the Combintorial was passed <code id="inline">(true, false).Cast&lt;object&gt;()</code>, it would return the same as the Simple Test Case above.</li>
+                </ol>
+                </li>
+                <li>Be careful with ending parenthases. Visual Studios&#39; Intellisense will show if there is an error. </li>
+                </ol>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <h2 id="example-2">Example 2</h2>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <div id="codeDiv">
+                    <pre><code class="lang-c#"><span class="hljs-title">protected</span> static <span class="hljs-type">IEnumerable</span> <span class="hljs-type">Execute_TestCases</span>
+                            {
+                                get
+                                {
+                                    foreach (<span class="hljs-type">WFTestCaseData</span> <span class="hljs-class"><span class="hljs-keyword">data</span> in <span class="hljs-type">WFTestCaseData</span>.<span class="hljs-type">Combinatorial</span>(
+                                         <span class="hljs-type">Enum</span>.<span class="hljs-type">GetValues</span>(<span class="hljs-title">typeof</span>(<span class="hljs-type">StatusEnum</span>)).<span class="hljs-type">Cast</span>&lt;object&gt;(),</span>
+                                         <span class="hljs-type">Enum</span>.<span class="hljs-type">GetValues</span>(typeof(<span class="hljs-type">StatusEnum</span>)).<span class="hljs-type">Cast</span>&lt;object&gt;(),
+                                         <span class="hljs-type">Enum</span>.<span class="hljs-type">GetValues</span>(typeof(<span class="hljs-type">UserTypeEnum</span>)).<span class="hljs-type">Cast</span>&lt;object&gt;()))
+                                    {
+                                        //<span class="hljs-type">Based</span> off <span class="hljs-type">OBStudio</span>, the <span class="hljs-type">To</span> <span class="hljs-type">Status</span> can only be set to <span class="hljs-string">"Pending"</span> or <span class="hljs-string">"Rejected"</span> and <span class="hljs-string">"None"</span> is not an option.
+                                        <span class="hljs-keyword">if</span> (<span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-type">ArgumentEquals</span>(1, <span class="hljs-type">StatusEnum</span>.<span class="hljs-type">All</span>) ||</span>
+                                            <span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-type">ArgumentEquals</span>(1, <span class="hljs-type">StatusEnum</span>.<span class="hljs-type">Approved</span>) ||</span>
+                                            <span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-type">ArgumentEquals</span>(0, <span class="hljs-type">StatusEnum</span>.<span class="hljs-type">None</span>) ||</span>
+                                            <span class="hljs-class"><span class="hljs-keyword">data</span>.<span class="hljs-type">ArgumentEquals</span>(1, <span class="hljs-type">StatusEnum</span>.<span class="hljs-type">None</span>))</span>
+                                        {
+                                            continue;
+                                        }
+                                        <span class="hljs-keyword">else</span>
+                                        {
+                                            yield return <span class="hljs-class"><span class="hljs-keyword">data</span>;</span>
+                                        }
+                                    }
+                                }
+                            }
+                    
+                            [<span class="hljs-type">Test</span>]
+                            [<span class="hljs-type">TestCaseSource</span>(typeof(<span class="hljs-type">ExecutionTest</span>), nameof(<span class="hljs-type">Execute_TestCases</span>))]
+                            public void <span class="hljs-type">Execute</span>(<span class="hljs-type">StatusEnum</span> fromStatus, <span class="hljs-type">StatusEnum</span> toStatus, <span class="hljs-type">UserTypeEnum</span> userType)
+                            {}
+                    </code></pre>
+                    </div>
+                    <details>
+                         <summary>Enumerations (OPEN)</summary>
+                         <div id="codeDiv">
+                    <pre><code class="lang-c#"> <span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> StatusEnum : <span class="hljs-keyword">long</span>
+                        {
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> All</span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+                            All = <span class="hljs-number">-1</span>,
+                    
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> None</span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+                            None = ApprovalStatusType.None,
+                    
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> Pending</span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+                            Pending = ApprovalStatusType.Pending,
+                    
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> Rejected</span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+                            Rejected = ApprovalStatusType.Rejected,
+                    
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> Approved</span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+                            Approved = ApprovalStatusType.Approved
+                        }
+                    
+                        <span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> UserTypeEnum
+                        {
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> AllUsers</span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+                            AllUsers,
+                    
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> CurrentUser</span>
+                            <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+                            CurrentUser
+                        }
+                    </code></pre>
+                    </div>
+                    </details> 
+
+            </td>
+            <td>
+                <p>If you need to use a Combintorial but don&#39;t need <strong><em>EVERY</em></strong> option, then you will use a <code>foreach</code> loop and <code>if/else()</code> statements, as shown below.</p>
+                
+                <h3 id="components-of-the-combintorial-method-with-foreach-loop-">Components of the Combintorial Method (with foreach loop)</h3>
+                <ol>
+                <li>Using the <code id="inline">foreach</code> loop means that the return statement is <em>within</em> the loop and not outside as with other examples.</li>
+                <li>Within the <code id="inline">foreach</code> loop is the Combintorial method, since the Combintorial method returns an IEnumerable of WFTestCaseData object.</li>
+                <li><div id="inline"><pre><code class="lang-c#"><span class="hljs-title">foreach</span>(
+                    <span class="hljs-type">WFTestCaseData</span> <span class="hljs-class"><span class="hljs-keyword">data</span> in <span class="hljs-type">WFTestCaseData</span>.<span class="hljs-type">Combintorial</span>(<span class="hljs-title">_options_</span>))</span>
+                    {
+                        return <span class="hljs-class"><span class="hljs-keyword">data</span>;</span>
+                    }
+                </code></pre></div>
+                <ol>
+                <li>This will return the same as using only the Combintorial. </li>
+                </ol>
+                </li>
+                <li>By using <code id="inline">if/else</code> statements and <code id="inline">continue;</code> vs. <code id="inline">return;</code>, we are able to control the test cases created.<ol>
+                <li>First, let&#39;s look at <code id="inline">data.ArgumentEquals()</code>.<ol>
+                <li><code id="inline">data</code> is the variable we named in the foreach loop, so we are looking at a single test case each time.</li>
+                <li><code id="inline">.ArgumentEquals()</code> returns a bool and needs the arugments <ol>
+                <li>The location in the Combintorial array that the argument we are looking for is located</li>
+                <li>The value we are comparing the argument to.</li>
+                <li><code id="inline">data.ArgumentEquals(1, StatusEnum.All)</code> is looking for in the second spot in the array, that the argument equals <code id="inline">StatusEnum.All</code>.</li>
+                <li>If the value of that iteration matches, then the method returns <code id="inline">true</code>, if it does not, the method returns <code id="inline">false</code>. </li>
+                </ol>
+                </li>
+                </ol>
+                </li>
+                <li>When using the <code id="inline">if()</code> statement and we want to <strong>SKIP</strong> that option in the test cases, we will find it and <code id="inline">continue;</code> the loop without returning the value.</li>
+                <li>When using the <code id="inline">if()</code> statement and we want to <strong>KEEP</strong> that option, we would use <code id="inline">yield return;</code> in our if statement. <ol>
+                <li>More times than not, we will <strong>skip</strong> values with <code id="inline">if</code> and <strong>return</strong> values with <code id="inline">else</code>.</li>
+                </ol>
+                </li>
+                </ol>
+                </li>
+                </ol>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer">
+<h1 id="yield-return">Yield Return</h1>
+<h2 >If you want to return more than one test case, use <strong>yield return</strong>, not just return.</h2>
+<h3 >If you use <strong>return</strong> alone, it will return the first iteration, then stop.</h3>
+</div>
+
+</body>
+</html>

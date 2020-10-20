@@ -1,11 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 body{
     background-color: antiquewhite;
     color: rgb(51, 50, 50);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
+    max-width: 98%;
 }
-
-ul {
+ol {
+    list-style-type: decimal-leading-zero;
+    text-align: left;
+}
+#inline {
+    background-color:  #f7ddbb;
+    color: black;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: #f1c68e;
+    border-width: 2px;
+}
+.navlinks ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -16,10 +30,9 @@ ul {
     width: 100%;
     position: fixed;
   }
-  li {
-    display: inline;
-    float: left;
-    display: block;
+.navlinks li {
+    display: inline-block;
+    float: none;
     color: white;
     text-align: center;
     padding: 14px 16px;
@@ -27,12 +40,12 @@ ul {
     border-right: 1px solid #bbb;
     background-color: #669999;
   }
-#code{
+#codeDiv{
     background-color: #004d4d;
     color: #ffffe6;
-    max-width: 75%;
+    max-width: fit-content;
     text-align: left;
-    margin-left: 15%;
+    /*margin-left: 10%;*/
     padding: 10px;
     border-style: solid;
     border-radius: 10px;
@@ -40,8 +53,11 @@ ul {
     border-width: 5px;
 }
 h1, h2, h3{
-    text-transform: uppercase;
-    margin-top: 50px;
+    text-transform: capitalize;
+   /* margin-top: 50px;*/
+}
+h2 {
+    padding-top: 15px;
 }
 table{
     text-align: center;
@@ -51,23 +67,92 @@ table{
 td{
     padding: 10px;
 }
+#testcaseinfotable {
+    text-align: left;
+    display: block !important;
+    float: left !important;
+    margin-left: 2% !important;
+}
 #questions img{
     margin-top: 50px;
     height: 600px;
     width: 800px;
     text-align: center;
 }
-button{
-  border-radius: 15px;
+#previous #next{
+  border-radius: 10px;
   background: black;
   color: white;
-  padding: 15px;
-  width: 150px;
+  padding: 10px;
+  width: 100px;
   height: 50px;
   text-shadow: grey 2px;
 }
 button:hover{
     background: #476b6b;
 }
+summary {
+    margin-left: 2%;
+    padding: 10px;
+    color: indigo;
+    width: fit-content;
+}
+.main {
+    border-radius: 10px;
+    background-color: #fcf4e8;
+    float: left;
+    display: block;
+    clear: both;
+    font-size: 0.5em;
+}
+.footer {
+    width: 100%;
+    float: left;
+    display: block;
+}
 
-
+/* Dropdown Button */
+.dropbtn {
+    background-color: antiquewhite;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: block;
+  }
+  
+  /* Dropdown button on hover & focus */
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: antiquewhite;
+    border-radius: 20px;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    clear: both;
+    display: block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd}
+  
+  /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+  .show {display:block;}
