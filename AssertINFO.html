@@ -1,0 +1,64 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css.css">
+    <script src="javascript.js"></script>
+</head>
+<body>
+    <div class="dropdown">
+        <img onclick="myFunction()" class="dropbtn" src="menu.jpg"/>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="index.html">Home</a>
+          <a href="TestCaseDataINFO.html">TestCaseData Information</a>
+          <a href="AssertINFO.html">Assert Information</a>
+          <a href="configquestions.html">Config Q1-3</a>
+          <a href="actquestions.html">Act Q4-6</a>
+          <a href="assertquestions.html">Assert Q7-9</a>
+          <a href="configuration.html">Config A1-3</a>
+          <a href="actanswers.html">Act A4-6</a>
+          <a href="assertanswers.html">Assert A7-9</a>
+        </div>
+      </div>
+
+<h1 id="assert-statments">Assert Statments</h1>
+<h2 id="checking-what-we-expect-to-happen-in-the-test-">Checking what we expect to happen in the test.</h2>
+<h3 id="main-scenarios">Main Scenarios</h3>
+<ol>
+<li><code id="inline">Assert.That(bool);</code><ol>
+<li>For readability, we can also write above as <code id="inline">Assert.That(bool, Is.True);</code></li>
+<li><code id="inline">Assert.That(bool, &quot;If not true, what happened&quot;);</code></li>
+</ol>
+</li>
+<li><code id="inline">Assert.That(!bool);</code><ol>
+<li>Same as <code id="inline">Assert.That(bool, Is.False);</code></li>
+<li><code id="inline">Assert.That(bool, Is.False, &quot;Message&quot;);</code></li>
+</ol>
+</li>
+<li><code id="inline">Assert.That(variable, Is.EqualTo(expectedVariable));</code><ol>
+<li><code id="inline">Assert.That(variable, Is.EqualTo(expectedVariable), &quot;Message&quot;);</code></li>
+</ol>
+</li>
+<li><code id="inline">Assert.That(list, Is.EquivalentTo(expectedList));</code><ol>
+<li><code id="inline">Assert.That(list, Is.EquivalentTo(expectedList), &quot;Message&quot;);</code></li>
+</ol>
+</li>
+<li><code id="inline">Assert.That(methodThatReturnsBool);</code></li>
+<li>Comparing two numbers:<ol>
+<li><code id="inline">Assert.That(int, Is.GreaterThan(otherInt));</code></li>
+<li><code id="inline">Assert.That(long, Is.LessThan(otherLong));</code></li>
+</ol>
+</li>
+<li>Checking if Null of Not Null:<ol>
+<li><code id="inline">Assert.That(object, Is.Null);</code></li>
+<li><code id="inline">Assert.That(otherObject, Is.Not.Null);</code></li>
+</ol>
+</li>
+</ol>
+<h3 id="real-life-examples">Real Life Examples</h3>
+<ol>
+<li><code id="inline">Assert.That(afterCount, Is.GreaterThan(beforeCount), &quot;The document was not successfully imported.&quot;);</code></li>
+<li><code id="inline">Assert.That(documentName.Equals(documentNameActual), &quot;The Auto-Name string displayed in the viewer did not match expected, maybe the document did not display at all?&quot;);</code></li>
+<li><code id="inline">Assert.That(Document.FromID(session, workItem.ID), Is.Null);</code></li>
+<li><code id="inline">Assert.That(Workflow.IsDialogDisplayed(), Is.False, &quot;An unexpected dialg was detected&quot;);</code></li>
+</ol>
+</body>
+</html>
