@@ -1,0 +1,135 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css.css">
+    <script src="javascript.js"></script>
+</head>
+<body>
+    <div class="dropdown">
+        <img onclick="myFunction()" class="dropbtn" src="menu.jpg"/>
+        <div id="myDropdown" class="dropdown-content" onclick="navBar();">
+            <!--Children populated by javascript.js navBar().-->
+        </div>
+        </div>
+      </div>
+
+        <h3 id="act-questions-4-6-complete">General Questions 10 COMPLETE</h3>
+        <p>I chose to write this test in NoRightsActionsAndRules. If you chose a different file, just sub the name. </p>
+        <div id="codeDiv">
+<pre><code class="lang-c#"> <span class="hljs-meta">#<span class="hljs-meta-keyword">region</span> Initializer</span>
+
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Initialize</span>(<span class="hljs-params"></span>)
+        </span>{
+            NoRightsActionsAndRules_TestName_TestData();
+        }
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endregion</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">region</span> Test Data</span>
+
+        <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NoRightsActionsAndRules_TestName_TestData</span>(<span class="hljs-params"></span>)
+        </span>{
+            <span class="hljs-keyword">if</span> (SmokeTestRegistry.Store.Keys.Contains(<span class="hljs-keyword">nameof</span>(NoRightsActionsAndRules_TestName))) { <span class="hljs-keyword">return</span>; };
+
+            TestDataConfigurationSet testData = <span class="hljs-keyword">new</span> TestDataConfigurationSet();
+
+            <span class="hljs-keyword">long</span> userGroupID = WorkflowBaseTest.API.Core.New(<span class="hljs-keyword">new</span> UserGroupConfiguration()
+            {
+                Privileges = <span class="hljs-keyword">new</span> ClientPrivilege[]
+                {
+                    ClientPrivilege.RetrieveDocument,
+                    ClientPrivilege.WorkflowRestricted,
+                    ClientPrivilege.Client,
+                    ClientPrivilege.WebClient
+                }
+            });
+
+            List&lt;<span class="hljs-keyword">long</span>&gt; userGroupIDs = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-keyword">long</span>&gt;() { userGroupID, SessionManager.ManagerUserGroupID };
+
+            <span class="hljs-keyword">long</span> userID = WorkflowBaseTest.API.Core.New(<span class="hljs-keyword">new</span> UserConfiguration()
+            {
+                AssignedUserGroupIDs = userGroupID.AsEnumerable()
+            });
+
+            <span class="hljs-keyword">long</span> documentTypeID = WorkflowBaseTest.API.Core.New(<span class="hljs-keyword">new</span> DocumentTypeConfiguration()
+            {
+                AutoNameString = <span class="hljs-string">"%#"</span>,
+                FileType = FileTypes.Text,
+                AssignedUserGroupIDs = userGroupIDs
+
+            }, Ids.DiskGroups.DATA);
+
+            <span class="hljs-keyword">long</span> lifeCycleID = WorkflowBaseTest.API.Workflow.New(<span class="hljs-keyword">new</span> LifeCycleConfiguration()
+            {
+                WorkItemType = WorkItemType.Document,
+                AssignedUserGroupIDs = userGroupIDs
+            });
+
+            <span class="hljs-keyword">long</span> queueID = WorkflowBaseTest.API.Workflow.New(lifeCycleID, <span class="hljs-keyword">new</span> QueueConfiguration()
+            {
+                AssignedUserGroupIDs = userGroupIDs,
+            });
+
+            <span class="hljs-comment"><span class="hljs-doctag">///</span>//</span>
+            Hyland.Core.CoreUtility.DropCache(AppConfig.DataSource);
+            SessionManager.RefreshSessions();
+            <span class="hljs-comment"><span class="hljs-doctag">///</span>//</span>
+
+            testData.Users = User.FromID(AppConfig.DataSource, userID).AsEnumerable();
+
+            ILifeCycle lifeCycle = LCProvider.GetLifeCycle(AppConfig.DataSource, lifeCycleID);
+
+            testData.LifeCycles = lifeCycle.AsEnumerable();
+
+            IQueue queue = QueueProvider.GetQueue(AppConfig.DataSource, queueID);
+
+            testData.Queues = queue.AsEnumerable();
+
+            IEnumerable&lt;<span class="hljs-keyword">long</span>&gt; documentIDs = Generate.CreateNewDocuments(documentTypeID, <span class="hljs-number">5</span>);
+
+            testData.DocumentsInQueue = Generate.CreateDocumentObjects(documentIDs).ToQueue();
+
+            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; testData.DocumentsInQueue.Count(); i++)
+            {
+                WFService.AddWorkItemToLifeCycle(SessionManager.Manager, testData.DocumentsInQueue.ElementAt(i), lifeCycle, <span class="hljs-literal">null</span>);
+            }
+
+            SmokeTestRegistry.Store.TryAdd(<span class="hljs-keyword">nameof</span>(NoRightsActionsAndRules_TestName), testData);
+        }
+
+        <span class="hljs-meta">#<span class="hljs-meta-keyword">endregion</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> Verify that the number of documents in the Queue matches what you created.</span>
+        <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+        [Test, Workflow(WorkflowTestType.SmokeTest)]
+        [Author(TeamMembers.MareChirico)]
+        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">NoRightsActionsAndRules_TestName</span>(<span class="hljs-params"></span>)
+        </span>{
+            TestDataConfigurationSet testData = SmokeTestRegistry.Store[<span class="hljs-keyword">nameof</span>(NoRightsActionsAndRules_TestName)];
+            ILifeCycle lc = testData.Lifecycles.FirstOrDefault();
+            IQueue q = testData.Queues.FirstOrDefault();
+            User user = testData.Users.FirstOrDefault();
+            <span class="hljs-keyword">long</span> queueCount = <span class="hljs-number">0</span>;
+
+            <span class="hljs-keyword">try</span>
+            {
+                LoginToWorkflow(user.Name);
+
+                Workflow.LifeCycle(lc.Name)
+                    .Expand()
+                    .Queue(q.Name);
+
+                Wait.Until(() =&gt; !Workflow.Inbox.IsLoading, r =&gt; r, <span class="hljs-number">15</span>, <span class="hljs-number">2</span>);
+
+                queueCount = Workflow.Inbox.ItemCount;
+
+            <span class="hljs-keyword">finally</span>
+            {
+                WorkflowLocks.RemoveAllLocks();
+            }
+
+            Assert.That(queueCount, Is.EqualTo(<span class="hljs-number">5</span>), <span class="hljs-string">"The Inbox did not display the correct number of items."</span>);
+        }
+</code></pre>
+
+        </div>
+</body>
+</html>

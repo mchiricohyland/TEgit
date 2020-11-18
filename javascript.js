@@ -1,5 +1,26 @@
 function main(){
-    document.getElementById("previous").style.backgroundColor = "grey";
+    var myDiv = document.getElementById("myDropdown");
+    var array = [{html: "index.html", title: "Home"}, 
+    {html: "TestCaseDataInfo.html", title: "Test Case Data Info"}, 
+    {html: "AssertINFO.html", title: "Assert Info"}, 
+    {html: "configquestions.html", title: "Config Q1-3"},
+    {html: "actquestions.html", title: "Act Q4-6"},
+    {html: "assertquestions.html", title: "Assert Q7-9"},
+    {html: "configuration.html", title: "Config A1-3"},
+    {html: "actanswers.html", title: "Act A4-6"},
+    {html: "assertanswers.html", title: "Assert A7-9"},
+    {html: "GeneralQuestions.html", title: "General Q10"},
+    {html: "GeneralAnswers.html", title: "General A10"},
+    ];
+
+    for(var item of array)
+    {
+        var anchorEl = document.createElement("a");
+        anchorEl.setAttribute("href", item.html);
+        anchorEl.innerHTML = item.title;
+
+        myDiv.appendChild(anchorEl);
+    }
 }
 
 function NavigateRight(){
@@ -33,6 +54,11 @@ function NavigateRight(){
     else if(img.getAttribute("src") === "Q8.png")
     {
         img.setAttribute("src", "Q9.png");
+        document.getElementById("next").style.backgroundColor = "grey";
+    }
+    else if(img.getAttribute("src") === "Q10.png")
+    {
+        img.setAttribute("src", "Q10-Tips.png");
         document.getElementById("next").style.backgroundColor = "grey";
     }
 }
@@ -70,6 +96,11 @@ function NavigateLeft(){
         img.setAttribute("src", "Q8.png");
         document.getElementById("next").style.backgroundColor = "black";
     }
+    else if(img.getAttribute("src") === "Q10-Tips.png")
+    {
+        img.setAttribute("src", "Q10.png");
+        document.getElementById("next").style.backgroundColor = "black";
+    }
 }
 
 /* When the user clicks on the button,
@@ -91,4 +122,5 @@ function myFunction() {
       }
     }
   }
+
 
