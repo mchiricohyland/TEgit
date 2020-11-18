@@ -1,7 +1,7 @@
 function main(){
     var myDiv = document.getElementById("myDropdown");
     var array = [{html: "index.html", title: "Home"}, 
-    {html: "TestCaseDataInfo.html", title: "Test Case Data Info"}, 
+    {html: "TestCaseDataINFO.html", title: "Test Case Data Info"}, 
     {html: "AssertINFO.html", title: "Assert Info"}, 
     {html: "configquestions.html", title: "Config Q1-3"},
     {html: "actquestions.html", title: "Act Q4-6"},
